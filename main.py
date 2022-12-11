@@ -1,6 +1,5 @@
 import pygame
 import neat
-import time
 import os
 import random
 pygame.font.init()
@@ -216,12 +215,12 @@ def main(genomes, config):
 
     score = 0
 
-    run = True
-    while run:
+    is_running = True
+    while is_running:
         clock.tick()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
+                is_running = False
                 pygame.quit()
                 quit()
 
@@ -231,7 +230,6 @@ def main(genomes, config):
             if len(pipes) > 1 and birds[0].x > pipes[0].x + pipes[0].PIPE_TOP.get_width():
                 pipe_ind = 1
         else:
-            run = False
             break
 
         for x, bird in enumerate(birds):
@@ -289,10 +287,10 @@ def main(genomes, config):
         draw_window(win, birds, pipes, base, score, GEN, SIZE)
 
 
-def run(config_path):
+def run(config_file):
     config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction,
                                 neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                                config_path)
+                                config_file)
 
     p = neat.Population(config)
 
@@ -300,7 +298,7 @@ def run(config_path):
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
 
-    winner = p.run(main, 50)
+    p.run(main, 50)
 
 
 if __name__ == "__main__":
