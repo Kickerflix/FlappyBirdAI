@@ -217,7 +217,7 @@ def main(genomes, config):
 
     is_running = True
     while is_running:
-        clock.tick()
+        clock.tick(30)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 is_running = False
